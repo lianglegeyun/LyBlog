@@ -34,4 +34,17 @@ $(function(){
 	  $("#tab1").html(htmlobj.responseText);
   };
 
+	page = function(page){
+        htmlobj=$.ajax({
+            url:"/blog/admin",
+            async:false,
+            data :{
+                method : 'vistorPage',
+                page : page
+            }
+        });
+        $("#vistorTable").html(htmlobj.responseText);
+        $('body').animate( {scrollTop: 0}, 500);
+    };
+
 });

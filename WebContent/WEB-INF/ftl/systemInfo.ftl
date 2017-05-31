@@ -1,4 +1,4 @@
-<div class="widget widget-table">                 
+<div class="widget widget-table" id="vistorTable">                 
   <div class="widget-header">
     <i class="icon-th-list"></i>
     <h3>访客信息</h3>
@@ -10,7 +10,7 @@
       <thead>
         <tr>
           <th>ip</th>
-          <th>agent</th>
+          <th>userAgent</th>
           <th>url</th>
           <th>date</th>
           <th>address</th>
@@ -21,11 +21,11 @@
         <#if (vistorList?size > 0)>
           <#list vistorList as v>
             <tr>
-              <td>${(a.ip)!}</td>
-              <td>${(a.agent)!}</td>
-              <td>${(a.url)!}</td>
-              <td>${(a.date)!}</td>
-              <td>${(a.address)!}</td>
+              <td>${(v.ip)!}</td>
+              <td>${(v.userAgent)!}</td>
+              <td>${(v.url)!}</td>
+              <td>${(v.date?string("yyyy-MM-dd"))!}</td>
+              <td>${(v.address)!}</td>
             </tr>
           </#list>
         </#if>

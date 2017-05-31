@@ -120,7 +120,7 @@
             <a href="#tab2" data-toggle="tab">
               <i class="icon-th-large"></i>
               日志  
-              <span class="label label-warning pull-right">#{(articleList?size)!0}</span>
+              <span class="label label-warning pull-right">#{(yesterdayVistorCount)!0}</span>
             </a>
           </li>
           
@@ -146,6 +146,7 @@
 
           <div class="tab-pane fade" id="tab2">
              <#include "/systemInfo.ftl">
+             <#include "/pager.ftl">
           </div>
 
         </div>
