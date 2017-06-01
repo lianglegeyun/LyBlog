@@ -12,6 +12,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ly.blog.dao.bean.dto.VistorDTO;
 import com.ly.blog.dao.bean.impl.Article;
 import com.ly.blog.dao.bean.impl.Vistor;
 import com.ly.blog.service.BlogService;
@@ -130,17 +131,12 @@ public class AdminController {
 		
 	}
 	
-	@RequestMapping(value="/admin",params="method=vistDetails")
-	public ModelAndView vistDetailsAction(){
-		ModelAndView model = new ModelAndView("vistDetails");
-		
-		return model;
-	}
 	
 	@RequestMapping(value="/admin",params="method=vistorInfo")
-	public ModelAndView vistorInfoAction(){
+	public ModelAndView vistorInfoAction() throws Exception{
 		ModelAndView model = new ModelAndView("vistorInfo");
-		
+		List<VistorDTO> vistors = VistorService.getVistor();
+		model.addObject("vistorList", vistors);
 		return model;
 	}
 	

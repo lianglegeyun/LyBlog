@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
+import com.ly.blog.dao.bean.dto.VistorDTO;
 import com.ly.blog.dao.bean.impl.Vistor;
 
 public interface VistorMapper {
@@ -26,4 +27,9 @@ public interface VistorMapper {
 	
 	@Select("select count(1) from (select 1 from t_vistor where date <#{endDate} and date >=#{beginDate} group by ip) t")
 	public int getPeriodVistorCount(@Param("beginDate")String beginDate, @Param("endDate")String endDate);
+	
+	@Select("select ip,count(*) as hits,address from t_vistor group by ip,address")
+	public List<VistorDTO> getVistors();
+	
+	
 }

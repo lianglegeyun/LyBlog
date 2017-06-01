@@ -10,7 +10,7 @@
       <thead>
         <tr>
           <th>ip</th>
-          <th>hits<th>
+          <th>hits</th>
           <th>address</th>
         </tr>
       </thead>

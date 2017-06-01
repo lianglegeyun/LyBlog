@@ -1,12 +1,12 @@
 package com.ly.blog.service;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
+import com.ly.blog.dao.bean.dto.VistorDTO;
 import com.ly.blog.dao.bean.impl.Vistor;
 import com.ly.blog.dao.mybatis.mapper.VistorMapper;
 
@@ -27,8 +27,15 @@ public class VistorService extends BaseService{
 	}
 	
 	
-	public static List<Vistor> getVistor(){
-		return new ArrayList<Vistor>();
+	public static List<VistorDTO> getVistor() throws Exception{
+		return baseExecution(new ICallback<List<VistorDTO>>() {
+
+			@Override
+			public List<VistorDTO> doExecute(SqlSession session) {
+				VistorMapper mapper = session.getMapper(VistorMapper.class);
+				return mapper.getVistors();
+			}
+		});
 	}
 	
 	public static List<Vistor> getYesterdayVistors() throws Exception{
