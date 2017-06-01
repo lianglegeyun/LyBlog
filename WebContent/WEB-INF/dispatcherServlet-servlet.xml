@@ -50,6 +50,10 @@
           <mvc:mapping path="/article/*"/> 
           <bean class="com.ly.blog.web.interceptor.VistorHandlerInterceptor"></bean>  
         </mvc:interceptor>
+        <mvc:interceptor>    
+          <mvc:mapping path="/article/*"/> 
+          <bean class="com.ly.blog.web.interceptor.ViewArticleHandlerInterceptor"></bean>  
+        </mvc:interceptor>
     </mvc:interceptors>
      
 </beans>

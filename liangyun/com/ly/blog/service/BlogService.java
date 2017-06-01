@@ -170,6 +170,18 @@ public class BlogService extends BaseService{
 		});
 	}
 	
+	public static void addViewedCount(int id) throws Exception{
+		baseExecution(new ICallback<Integer>() {
+			@Override
+			public Integer doExecute(SqlSession session) {
+				ArticleMapper mapper = session.getMapper(ArticleMapper.class);
+				mapper.addViewedCount(id);
+				session.commit();
+				return null;
+			}
+		});
+	}
+	
 	/**
 	 * 
 	 */

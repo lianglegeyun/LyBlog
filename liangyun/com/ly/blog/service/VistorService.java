@@ -1,8 +1,8 @@
 package com.ly.blog.service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -77,16 +77,11 @@ public class VistorService extends BaseService{
 	
 	public static int getYesterdayVistorCount() throws Exception{
 		Calendar calendar = Calendar.getInstance();
-		int tyear = calendar.get(Calendar.YEAR);
-		int tmonth = calendar.get(Calendar.MONTH) + 1;
-		int tdate = calendar.get(Calendar.DATE);
-		String endDate = tyear + "-" + tmonth + "-" + tdate;
+		SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd");
+		String endDate = df.format(calendar.getTime());
 		
 		calendar.add(Calendar.DATE, -1);
-		int yyear = calendar.get(Calendar.YEAR);
-		int ymonth = calendar.get(Calendar.MONTH) + 1;
-		int ydate = calendar.get(Calendar.DATE);
-		String beginDate = yyear + "-" + ymonth + "-" + ydate;
+		String beginDate = df.format(calendar.getTime());
 		
 		return baseExecution(new ICallback<Integer>() {
 			@Override

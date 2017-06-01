@@ -43,7 +43,7 @@ $(function(){
                 page : page
             }
         });
-        $("#vistorTable").html(htmlobj.responseText);
+        $("#systemInfoDiv").html(htmlobj.responseText);
         $('body').animate( {scrollTop: 0}, 500);
     };
 

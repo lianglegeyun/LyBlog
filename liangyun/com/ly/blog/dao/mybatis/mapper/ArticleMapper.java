@@ -39,4 +39,7 @@ public interface ArticleMapper {
 	@Delete("delete from t_article")
 	public int deleteAllArticle();
 	
+	@Update("update t_article set viewedCount=viewedCount+1 where id=#{id}")
+	public void addViewedCount(int id);
+	
 }

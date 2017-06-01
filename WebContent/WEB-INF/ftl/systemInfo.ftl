@@ -1,38 +1,11 @@
-<div class="widget widget-table" id="vistorTable">                 
-  <div class="widget-header">
-    <i class="icon-th-list"></i>
-    <h3>访客信息</h3>
-  </div> <!-- /widget-header -->
-  
-  <div class="widget-content">
-  
-    <table class="table table-striped table-bordered">
-      <thead>
-        <tr>
-          <th>ip</th>
-          <th>userAgent</th>
-          <th>url</th>
-          <th>date</th>
-          <th>address</th>
-        </tr>
-      </thead>
-      
-      <tbody>
-        <#if (vistorList?size > 0)>
-          <#list vistorList as v>
-            <tr>
-              <td>${(v.ip)!}</td>
-              <td>${(v.userAgent)!}</td>
-              <td>${(v.url)!}</td>
-              <td>${(v.date?string("yyyy-MM-dd"))!}</td>
-              <td>${(v.address)!}</td>
-            </tr>
-          </#list>
-        </#if>
-        
-      </tbody>
-    </table>
-  
-  </div> <!-- /widget-content -->
-  
+<#assign basePath=request.contextPath>
+<div class="btn-toolbar" role="toolbar">
+  <button type="button" class="btn btn-default" id="vistDetails">访问详细信息</button>
+  <button type="button" class="btn btn-default" id="vistorInfo">访客信息</button>
+  <button type="button" class="btn btn-default" id="updateAddr">更新ip地理位置</button>
 </div>
+<div id="systemInfoDiv">
+
+  <#include "/vistDetails.ftl">
+</div>
+<script src="${basePath}/admin/js/vistor.js"></script>

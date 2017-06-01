@@ -40,8 +40,8 @@ public class HomeController {
 		model.addObject("pager", pager);
 		
 		model.addObject("articleCount", count);
-		model.addObject("musicCount", 312);
-		model.addObject("pictureCount", 5);
+		model.addObject("musicCount", 0);
+		model.addObject("pictureCount", 0);
 		return model;
 	}
 	

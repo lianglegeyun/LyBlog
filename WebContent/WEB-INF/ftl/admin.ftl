@@ -146,7 +146,7 @@
 
           <div class="tab-pane fade" id="tab2">
              <#include "/systemInfo.ftl">
-             <#include "/pager.ftl">
+             
           </div>
 
         </div>

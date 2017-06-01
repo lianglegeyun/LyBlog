@@ -24,6 +24,6 @@ public interface VistorMapper {
 	@Select("select count(1) from t_vistor")
 	public int getVistCount();
 	
-	@Select("select count(1) from (select 1 from t_vistor where date <#{endDate} and date >=#{endDate} group by ip) t")
+	@Select("select count(1) from (select 1 from t_vistor where date <#{endDate} and date >=#{beginDate} group by ip) t")
 	public int getPeriodVistorCount(@Param("beginDate")String beginDate, @Param("endDate")String endDate);
 }

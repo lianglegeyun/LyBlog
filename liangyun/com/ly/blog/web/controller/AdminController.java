@@ -45,7 +45,6 @@ public class AdminController {
 			pager.add(pager.size() + 1);
 		}
 		model.addObject("pager", pager);
-		
 		//
 		int yesterdayVistorCount = VistorService.getYesterdayVistorCount();
 		model.addObject("yesterdayVistorCount", yesterdayVistorCount);
@@ -112,13 +111,44 @@ public class AdminController {
 	@RequestMapping(value="/admin",params="method=vistorPage")
 	public ModelAndView vistorPageAction(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		
-		ModelAndView model = new ModelAndView("systemInfo");
-		int page = Integer.valueOf(request.getParameter("page"));
+		ModelAndView model = new ModelAndView("vistDetails");
+		String pageStr = request.getParameter("page");
+		int page = StringUtils.isEmpty(pageStr) ? 1 : Integer.valueOf(pageStr);
 		List<Vistor> vistorList = VistorService.getPagingVistors(page, VISTORPAGESIZE);
 		model.addObject("vistorList", vistorList);
-		
+		//
+		int count = VistorService.getVistCount();
+		List<Integer> pager = new ArrayList<Integer>();
+		for(int i = 0; i < count / VISTORPAGESIZE; i++){
+			pager.add(i + 1);
+		}
+		if( VISTORPAGESIZE * pager.size() < count){
+			pager.add(pager.size() + 1);
+		}
+		model.addObject("pager", pager);
 		return model;
 		
+	}
+	
+	@RequestMapping(value="/admin",params="method=vistDetails")
+	public ModelAndView vistDetailsAction(){
+		ModelAndView model = new ModelAndView("vistDetails");
+		
+		return model;
+	}
+	
+	@RequestMapping(value="/admin",params="method=vistorInfo")
+	public ModelAndView vistorInfoAction(){
+		ModelAndView model = new ModelAndView("vistorInfo");
+		
+		return model;
+	}
+	
+	@RequestMapping(value="/admin",params="method=updateAddr")
+	public ModelAndView updateAddrAction(){
+		ModelAndView model = new ModelAndView("updateAddr");
+		
+		return model;
 	}
 
 }
