@@ -18,8 +18,6 @@ public class BaseService {
 			stream = Resources.getResourceAsStream(resource);
 			SqlSessionFactory sessionFactory = new SqlSessionFactoryBuilder().build(stream);
 			session = sessionFactory.openSession();
-			/*ArticleMapper mapper = session.getMapper();
-			List<Article> list = mapper.getAllArticles();*/
 			return callback.doExecute(session);
 		} catch (IOException e) {
 			e.printStackTrace();

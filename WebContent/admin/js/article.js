@@ -6,11 +6,30 @@ $(function(){
       maxHeight: 500,        
       focus: true,   
       lang:'zh-CN',   
-      // 重写图片上传  
-      onImageUpload: function(files, editor, $editable) {  
-          sendFile(files[0],editor,$editable);  
-      }  
-  	});
+      callbacks: {
+        // 重写图片上传  
+        onImageUpload: function(files, editor, $editable) {  
+            sendFile(files[0],editor,$editable);  
+        }  
+      }
+  });
+
+  sendFile = function(file){
+    data = new FormData();  
+    data.append("file", file);
+    $.ajax({
+        data: data,  
+        type: "POST",  
+        url: "admin/uploadImg",  
+        cache: false,  
+        contentType: false,  
+        processData: false,
+        dataType : "json",  
+        success: function(data) {  
+          $("#summernote").summernote('insertImage', data.url, 'image name'); // the insertImage API  
+        }  
+    });  
+  };
 
 	$('#back').click(function(){
 	  htmlobj=$.ajax({

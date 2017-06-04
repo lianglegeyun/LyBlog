@@ -31,5 +31,7 @@ public interface VistorMapper {
 	@Select("select ip,count(*) as hits,address from t_vistor group by ip,address")
 	public List<VistorDTO> getVistors();
 	
+	@Select("select id,ip from t_vistor")
+	public List<Vistor> getAllVists();
 	
 }

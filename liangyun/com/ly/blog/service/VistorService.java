@@ -1,14 +1,19 @@
 package com.ly.blog.service;
 
+import java.sql.PreparedStatement;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.apache.ibatis.session.SqlSession;
 
 import com.ly.blog.dao.bean.dto.VistorDTO;
 import com.ly.blog.dao.bean.impl.Vistor;
 import com.ly.blog.dao.mybatis.mapper.VistorMapper;
+import com.ly.blog.web.util.IPAddrUtil;
 
 public class VistorService extends BaseService{
 	
@@ -96,6 +101,42 @@ public class VistorService extends BaseService{
 				VistorMapper mapper = session.getMapper(VistorMapper.class);
 				return mapper.getPeriodVistorCount(beginDate, endDate);
 			}
+		});
+	}
+	
+	public static List<Vistor> getAllVists() throws Exception{
+		return baseExecution(new ICallback<List<Vistor>>() {
+			@Override
+			public List<Vistor> doExecute(SqlSession session) {
+				VistorMapper mapper = session.getMapper(VistorMapper.class);
+				return mapper.getAllVists();
+			}
+		});
+		
+	}
+	
+	public static Integer[] batchUpdateVistorAddr() throws Exception{
+		List<Vistor> vistors = getAllVists();
+		Map<String, String> ipAddrMap = IPAddrUtil.getIPAddrMapping(vistors);
+		return baseExecution(new ICallback<Integer[]>(){
+			@Override
+			public Integer[] doExecute(SqlSession session) throws Exception{
+				String sql = "update t_vistor set address=? where ip=?";
+				PreparedStatement statement = session.getConnection().prepareStatement(sql);
+				Iterator<Entry<String, String>> iterator = ipAddrMap.entrySet().iterator();
+				while(iterator.hasNext()){
+					Entry<String, String> entry = iterator.next();
+					String ip = entry.getKey();
+					String addr = entry.getValue();
+					statement.setObject(1, addr);
+					statement.setObject(2, ip);
+					statement.addBatch();
+				}
+				int[] result = statement.executeBatch();
+				statement.clearBatch();
+				return null;
+			}
+			
 		});
 	}
 	

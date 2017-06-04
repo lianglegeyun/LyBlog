@@ -1,5 +1,9 @@
 package com.ly.blog.web.controller;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -7,6 +11,10 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -141,10 +149,61 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value="/admin",params="method=updateAddr")
-	public ModelAndView updateAddrAction(){
-		ModelAndView model = new ModelAndView("updateAddr");
+	public ModelAndView updateAddrAction(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		VistorService.batchUpdateVistorAddr();
+		return vistorPageAction(request, response);
+	}
+	
+	@RequestMapping(value="/admin/uploadImg")
+	public void uploadImgAction(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		String savePath = uploadFile(request);
+		String jsonStr = "\"url\" : \"" + savePath + "\"";
+		JsonUtil.writeSuccessData(response, jsonStr);
 		
-		return model;
+	}
+	
+	private String uploadFile(HttpServletRequest request){
+		String savePath = request.getRealPath("/upload");
+		File file = new File(savePath);
+        if(!file.exists()&&!file.isDirectory()){
+            file.mkdir();
+        }
+		DiskFileItemFactory diskFileItemFactory = new DiskFileItemFactory();
+		ServletFileUpload fileUpload = new ServletFileUpload(diskFileItemFactory);
+		fileUpload.setHeaderEncoding("UTF-8");
+		if(!ServletFileUpload.isMultipartContent(request)){
+            //按照传统方式获取数据
+            return null;
+        }
+		String fileName = null;
+		try {
+			List<FileItem> list = fileUpload.parseRequest(request);
+			for (FileItem item : list) {
+				if( !item.isFormField()){
+					fileName = item.getName();
+					if(fileName==null||fileName.trim().equals("")){
+                        continue;
+                    }
+					fileName = fileName.substring(fileName.lastIndexOf(File.separator)+1);
+					InputStream is = item.getInputStream();
+					FileOutputStream fos = new FileOutputStream(savePath + File.separator + fileName);
+					byte buffer[] = new byte[1024];
+					int length = 0;
+					while((length = is.read(buffer))>0){
+                        fos.write(buffer, 0, length);
+                    }
+					is.close();
+					fos.close();
+					item.delete();
+				}
+			}
+			return request.getContextPath() + "/upload/" + fileName;
+		} catch (FileUploadException e) {
+			e.printStackTrace();
+		} catch(IOException e){
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }
