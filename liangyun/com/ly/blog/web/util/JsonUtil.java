@@ -10,7 +10,6 @@ import org.springframework.util.StringUtils;
 public class JsonUtil {
 
 	public static void writeSuccessData(HttpServletResponse response, String jsonStr) throws IOException{
-		 //…Ë÷√“≥√Ê≤ªª∫¥Ê
         response.setContentType("application/json");
         response.setHeader("Pragma", "No-cache");
         response.setHeader("Cache-Control", "no-cache");

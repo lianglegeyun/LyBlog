@@ -21,8 +21,8 @@ public class ViewController {
 		model.addObject("article", article);
 		
 		model.addObject("articleCount", BlogService.getPublicArticleCount());
-		model.addObject("musicCount", 312);
-		model.addObject("pictureCount", 5);
+		model.addObject("musicCount", 0);
+		model.addObject("pictureCount", 0);
 		
 		return model;
 	}

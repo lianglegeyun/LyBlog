@@ -172,7 +172,6 @@ public class AdminController {
 		ServletFileUpload fileUpload = new ServletFileUpload(diskFileItemFactory);
 		fileUpload.setHeaderEncoding("UTF-8");
 		if(!ServletFileUpload.isMultipartContent(request)){
-            //按照传统方式获取数据
             return null;
         }
 		String fileName = null;

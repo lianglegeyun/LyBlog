@@ -12,6 +12,7 @@ import java.util.Map;
 import org.springframework.util.StringUtils;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONException;
 import com.ly.blog.dao.bean.impl.Vistor;
 
 public class IPAddrUtil {
@@ -33,12 +34,15 @@ public class IPAddrUtil {
 			String province =  map.get("province");
 			String city =  map.get("city");
 			if(StringUtils.isEmpty(country) && StringUtils.isEmpty(province) && StringUtils.isEmpty(city)){
-				return "¾ÖÓòÍø";
+				return "æœ¬åœ°å±€åŸŸç½‘";
 			}
 			return country + province + city;
 		}catch(IOException e){
 			e.printStackTrace();
 			return null;
+		}catch(JSONException e){
+			e.printStackTrace();
+			return "æ— æ•ˆip";
 		}
 	}
 	
