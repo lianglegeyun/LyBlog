@@ -1,3 +1,4 @@
+//@ sourceURL=summernote.js
 /**
  * Super simple wysiwyg editor v0.8.3
  * http://summernote.org/
