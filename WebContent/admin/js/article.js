@@ -49,7 +49,8 @@ $(function(){
   		var content = $('#summernote').summernote('code');
   		var isPrivate = $('#secret')[0].checked;
   		$.ajax({
-		  	url:"/blog/admin",
+  			type: 'POST',
+  			url:"/blog/admin",
 		  	async:false,
 		  	data : {
 		  		method : 'save',
