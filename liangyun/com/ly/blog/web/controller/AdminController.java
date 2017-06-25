@@ -26,11 +26,13 @@ import com.ly.blog.dao.bean.impl.Vistor;
 import com.ly.blog.service.BlogService;
 import com.ly.blog.service.VistorService;
 import com.ly.blog.web.util.JsonUtil;
+import com.ly.blog.web.util.PagerUtil;
 
 @Controller
 public class AdminController {
 	
 	private static final int VISTORPAGESIZE = 20;
+	private static final int PAGERCOUNT = 5;
 	
 	@RequestMapping(value="/admin")
 	public ModelAndView adminAction(HttpServletRequest request) throws Exception{
@@ -44,15 +46,10 @@ public class AdminController {
 		int page = StringUtils.isEmpty(pageStr) ? 1 : Integer.valueOf(pageStr);
 		List<Vistor> vistorList = VistorService.getPagingVistors(page, VISTORPAGESIZE);
 		model.addObject("vistorList", vistorList);
-		//
-		int count = VistorService.getVistCount();
-		List<Integer> pager = new ArrayList<Integer>();
-		for(int i = 0; i < count / VISTORPAGESIZE; i++){
-			pager.add(i + 1);
-		}
-		if( VISTORPAGESIZE * pager.size() < count){
-			pager.add(pager.size() + 1);
-		}
+		
+		int total = VistorService.getVistCount();
+		List<String> pager = PagerUtil.getPager(total, VISTORPAGESIZE, PAGERCOUNT, page);
+		
 		model.addObject("pager", pager);
 		//
 		int yesterdayVistorCount = VistorService.getYesterdayVistorCount();
@@ -126,14 +123,8 @@ public class AdminController {
 		List<Vistor> vistorList = VistorService.getPagingVistors(page, VISTORPAGESIZE);
 		model.addObject("vistorList", vistorList);
 		//
-		int count = VistorService.getVistCount();
-		List<Integer> pager = new ArrayList<Integer>();
-		for(int i = 0; i < count / VISTORPAGESIZE; i++){
-			pager.add(i + 1);
-		}
-		if( VISTORPAGESIZE * pager.size() < count){
-			pager.add(pager.size() + 1);
-		}
+		int total = VistorService.getVistCount();
+		List<String> pager = PagerUtil.getPager(total, VISTORPAGESIZE, PAGERCOUNT, page);
 		model.addObject("pager", pager);
 		return model;
 		

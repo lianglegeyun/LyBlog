@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -32,9 +33,15 @@ public class VistorHandlerInterceptor implements HandlerInterceptor{
 			throws Exception {
 		if( !UserUtil.CheckIsLogined(request)){
 			Vistor vistor = new Vistor();
-			String addr = getIPAddr(request);
 			String userAgent =request.getHeader("User-Agent");
+			if(StringUtils.isEmpty(userAgent.trim()) || userAgent.contains("spider") || userAgent.contains("Alibaba")){
+				return;
+			}
 			String url = request.getRequestURL().toString();
+			if(url.equals("http://localhost/")){
+				return;
+			}
+			String addr = getIPAddr(request);
 			vistor.setIp(addr);
 			vistor.setUserAgent(userAgent);
 			vistor.setDate(new Date());

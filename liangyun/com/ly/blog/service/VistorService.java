@@ -115,13 +115,24 @@ public class VistorService extends BaseService{
 		
 	}
 	
+	public static List<Vistor> getNewVists() throws Exception{
+		return baseExecution(new ICallback<List<Vistor>>() {
+			@Override
+			public List<Vistor> doExecute(SqlSession session) {
+				VistorMapper mapper = session.getMapper(VistorMapper.class);
+				return mapper.getNewVists();
+			}
+		});
+		
+	}
+	
 	public static Integer[] batchUpdateVistorAddr() throws Exception{
-		List<Vistor> vistors = getAllVists();
+		List<Vistor> vistors = getNewVists();
 		Map<String, String> ipAddrMap = IPAddrUtil.getIPAddrMapping(vistors);
 		return baseExecution(new ICallback<Integer[]>(){
 			@Override
 			public Integer[] doExecute(SqlSession session) throws Exception{
-				String sql = "update t_vistor set address=? where ip=?";
+				String sql = "update t_vistor set address=? where ip=? and address is null";
 				PreparedStatement statement = session.getConnection().prepareStatement(sql);
 				Iterator<Entry<String, String>> iterator = ipAddrMap.entrySet().iterator();
 				while(iterator.hasNext()){

@@ -34,4 +34,7 @@ public interface VistorMapper {
 	@Select("select id,ip from t_vistor")
 	public List<Vistor> getAllVists();
 	
+	@Select("select id,ip from t_vistor where address is null")
+	public List<Vistor> getNewVists();
+	
 }

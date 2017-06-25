@@ -3,8 +3,13 @@
     <li><a href="javascript:void(0)" onclick="page(1)">&laquo;</a></li>
     <#if (pager?size > 0)>
       <#list pager as p>
+        <#if p == "...">
+        	<li><a href="javascript:void(0)">...</a></li>
         
-        <li><a href="javascript:void(0)" onclick="page(${p})">${p}</a></li>
+        <#else>
+        	<li><a href="javascript:void(0)" onclick="page(${p})">${p}</a></li>
+        </#if>
+
       </#list>
     
     </#if>
