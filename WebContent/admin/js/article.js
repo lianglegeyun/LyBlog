@@ -61,6 +61,7 @@ $(function(){
 		  		isPrivate : isPrivate
 		  	},
 		  	success:function(data){
+		  		$('#id').val(data.id);
 		  		alert('success!');
 		  	},
 		  	error: function() {
