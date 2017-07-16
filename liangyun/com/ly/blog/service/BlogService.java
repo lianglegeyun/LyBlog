@@ -69,7 +69,7 @@ public class BlogService extends BaseService{
 			}
 		});
 		List<Article> result = null;
-		if(pageSize * page - 1 > articles.size()){
+		if(pageSize * page - 1 >= articles.size()){
 			result = articles.subList(pageSize * (page - 1), articles.size());
 		}else{
 			result = articles.subList(pageSize * (page - 1), pageSize * page);
